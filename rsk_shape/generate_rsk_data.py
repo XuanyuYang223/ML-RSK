@@ -50,7 +50,7 @@ def parse_args() -> argparse.Namespace:
         help="Number of examples.",
     )
     parser.add_argument("--seed", type=int, default=int(os.getenv("RSK_SEED", "0")))
-    parser.add_argument("--out-dir", type=Path, default=Path(os.getenv("RSK_OUT_DIR", "data")))
+    parser.add_argument("--out-dir", type=Path, default=Path(os.getenv("RSK_OUT_DIR", "data/rsk_shape")))
     parser.add_argument("--prefix", type=str, default=os.getenv("RSK_PREFIX"))
     args, _unknown = parser.parse_known_args()
     return args

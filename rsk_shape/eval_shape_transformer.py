@@ -16,7 +16,7 @@ from train_shape_transformer import RSKShapeDataset, ShapeTransformer, compute_m
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("dataset", type=Path)
-    parser.add_argument("--checkpoint", type=Path, default=Path("models/shape_transformer.pt"))
+    parser.add_argument("--checkpoint", type=Path, default=Path("models/rsk_shape/shape_transformer.pt"))
     parser.add_argument("--batch-size", type=int, default=256)
     parser.add_argument("--device", type=str, default="auto")
     parser.add_argument("--examples", type=int, default=5)
