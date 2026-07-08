@@ -1,0 +1,10 @@
+task=sign target_mode=classification representation=lehmer dataset=data/rsk_shape/rsk_n30_m100000_seed2.npz n=30 outputs=2 train=16000 test=4000 device=cpu parameters=104258
+epoch=0001 train_loss=0.6996 test_loss=0.6936 train_acc=0.5002 test_acc=0.5100
+epoch=0002 train_loss=0.6948 test_loss=0.6933 train_acc=0.5036 test_acc=0.5070
+epoch=0003 train_loss=0.6944 test_loss=0.6936 train_acc=0.5046 test_acc=0.4970
+epoch=0004 train_loss=0.6941 test_loss=0.6939 train_acc=0.5081 test_acc=0.4942
+epoch=0005 train_loss=0.6943 test_loss=0.6950 train_acc=0.5028 test_acc=0.4848
+epoch=0006 train_loss=0.6938 test_loss=0.6938 train_acc=0.5054 test_acc=0.5022
+epoch=0007 train_loss=0.6953 test_loss=0.6943 train_acc=0.5071 test_acc=0.5070
+epoch=0008 train_loss=0.6929 test_loss=0.6946 train_acc=0.5137 test_acc=0.5070
+wrote experiments/perm_invariants_20k_e8_v1/sign_classification_lehmer/model.pt

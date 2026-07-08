@@ -1,0 +1,10 @@
+task=sign target_mode=classification representation=one_line dataset=data/rsk_shape/rsk_n30_m100000_seed2.npz n=30 outputs=2 train=16000 test=4000 device=cpu parameters=104258
+epoch=0001 train_loss=0.6994 test_loss=0.6936 train_acc=0.4989 test_acc=0.5112
+epoch=0002 train_loss=0.6944 test_loss=0.6933 train_acc=0.5039 test_acc=0.5098
+epoch=0003 train_loss=0.6943 test_loss=0.6934 train_acc=0.5071 test_acc=0.5010
+epoch=0004 train_loss=0.6939 test_loss=0.6938 train_acc=0.5009 test_acc=0.4840
+epoch=0005 train_loss=0.6939 test_loss=0.6954 train_acc=0.5031 test_acc=0.4915
+epoch=0006 train_loss=0.6937 test_loss=0.6942 train_acc=0.5072 test_acc=0.5020
+epoch=0007 train_loss=0.6951 test_loss=0.6950 train_acc=0.5042 test_acc=0.5113
+epoch=0008 train_loss=0.6921 test_loss=0.6955 train_acc=0.5250 test_acc=0.5097
+wrote experiments/perm_invariants_20k_e8_v1/sign_classification_one_line/model.pt

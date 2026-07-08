@@ -1,0 +1,1 @@
+/home/yangx/miniforge3/envs/sage/bin/python -u shape_counts/train_shape_counts_mlp.py --task ssyt --n 30 --alphabet-size 30 --epochs 3 --batch-size 256 --hidden 256 --layers 3 --feature-set rows_cols_hooks --device cpu --model-out experiments/shape_count_features_dryrun/ssyt_rows_cols_hooks/model.pt

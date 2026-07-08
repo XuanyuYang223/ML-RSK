@@ -1,0 +1,1 @@
+/home/yangx/miniforge3/envs/sage/bin/python rsk_shape/eval_shape_ar_partitions.py data/rsk_shape/rsk_n30_m2000_seed1_test.npz --checkpoint experiments/rsk_shape_autoregressive_10k_e5/lehmer_constrained/model.pt --batch-size 32 --candidate-chunk-size 512 --device cpu

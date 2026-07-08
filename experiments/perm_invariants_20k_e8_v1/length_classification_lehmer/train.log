@@ -1,0 +1,10 @@
+task=length target_mode=classification representation=lehmer dataset=data/rsk_shape/rsk_n30_m100000_seed2.npz n=30 outputs=436 train=16000 test=4000 device=cpu parameters=132468
+epoch=0001 train_loss=5.8178 test_loss=5.4880 train_acc=0.0103 test_acc=0.0145 test_mae=23.971
+epoch=0002 train_loss=5.2955 test_loss=5.1197 train_acc=0.0132 test_acc=0.0140 test_mae=23.232
+epoch=0003 train_loss=5.0206 test_loss=4.9411 train_acc=0.0141 test_acc=0.0153 test_mae=22.722
+epoch=0004 train_loss=4.8928 test_loss=4.8610 train_acc=0.0140 test_acc=0.0155 test_mae=22.282
+epoch=0005 train_loss=4.8332 test_loss=4.8212 train_acc=0.0144 test_acc=0.0110 test_mae=22.714
+epoch=0006 train_loss=4.7985 test_loss=4.7950 train_acc=0.0160 test_acc=0.0145 test_mae=23.066
+epoch=0007 train_loss=4.7667 test_loss=4.7529 train_acc=0.0168 test_acc=0.0143 test_mae=19.630
+epoch=0008 train_loss=4.6894 test_loss=4.6167 train_acc=0.0203 test_acc=0.0230 test_mae=16.653
+wrote experiments/perm_invariants_20k_e8_v1/length_classification_lehmer/model.pt

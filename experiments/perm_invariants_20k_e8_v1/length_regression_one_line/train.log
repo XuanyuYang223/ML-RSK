@@ -1,0 +1,10 @@
+task=length target_mode=regression representation=one_line dataset=data/rsk_shape/rsk_n30_m100000_seed2.npz n=30 outputs=1 train=16000 test=4000 device=cpu parameters=104193
+epoch=0001 train_loss=0.0186 test_loss=0.0048 train_mae=45.599 test_mae=24.171 test_rmse=30.228 test_rounded_acc=0.0115
+epoch=0002 train_loss=0.0075 test_loss=0.0040 train_mae=30.144 test_mae=22.080 test_rmse=27.610 test_rounded_acc=0.0135
+epoch=0003 train_loss=0.0060 test_loss=0.0039 train_mae=26.870 test_mae=21.701 test_rmse=27.143 test_rounded_acc=0.0153
+epoch=0004 train_loss=0.0052 test_loss=0.0036 train_mae=25.148 test_mae=20.853 test_rmse=26.093 test_rounded_acc=0.0153
+epoch=0005 train_loss=0.0046 test_loss=0.0034 train_mae=23.726 test_mae=20.391 test_rmse=25.490 test_rounded_acc=0.0135
+epoch=0006 train_loss=0.0042 test_loss=0.0030 train_mae=22.421 test_mae=18.997 test_rmse=23.721 test_rounded_acc=0.0168
+epoch=0007 train_loss=0.0036 test_loss=0.0024 train_mae=20.856 test_mae=16.901 test_rmse=21.085 test_rounded_acc=0.0190
+epoch=0008 train_loss=0.0031 test_loss=0.0020 train_mae=19.289 test_mae=15.418 test_rmse=19.246 test_rounded_acc=0.0180
+wrote experiments/perm_invariants_20k_e8_v1/length_regression_one_line/model.pt

@@ -1,0 +1,10 @@
+task=length target_mode=classification representation=one_line dataset=data/rsk_shape/rsk_n30_m100000_seed2.npz n=30 outputs=436 train=16000 test=4000 device=cpu parameters=132468
+epoch=0001 train_loss=5.8245 test_loss=5.4902 train_acc=0.0119 test_acc=0.0155 test_mae=22.904
+epoch=0002 train_loss=5.2973 test_loss=5.1202 train_acc=0.0136 test_acc=0.0155 test_mae=22.901
+epoch=0003 train_loss=5.0229 test_loss=4.9423 train_acc=0.0133 test_acc=0.0145 test_mae=22.964
+epoch=0004 train_loss=4.8956 test_loss=4.8638 train_acc=0.0128 test_acc=0.0153 test_mae=22.898
+epoch=0005 train_loss=4.8386 test_loss=4.8266 train_acc=0.0135 test_acc=0.0100 test_mae=23.750
+epoch=0006 train_loss=4.8092 test_loss=4.8078 train_acc=0.0143 test_acc=0.0138 test_mae=24.921
+epoch=0007 train_loss=4.7953 test_loss=4.7986 train_acc=0.0140 test_acc=0.0130 test_mae=23.389
+epoch=0008 train_loss=4.7853 test_loss=4.7899 train_acc=0.0135 test_acc=0.0158 test_mae=22.854
+wrote experiments/perm_invariants_20k_e8_v1/length_classification_one_line/model.pt

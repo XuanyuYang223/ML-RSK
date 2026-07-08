@@ -1,0 +1,10 @@
+task=length target_mode=regression representation=lehmer dataset=data/rsk_shape/rsk_n30_m100000_seed2.npz n=30 outputs=1 train=16000 test=4000 device=cpu parameters=104193
+epoch=0001 train_loss=0.0193 test_loss=0.0040 train_mae=46.341 test_mae=21.781 test_rmse=27.522 test_rounded_acc=0.0133
+epoch=0002 train_loss=0.0063 test_loss=0.0022 train_mae=27.762 test_mae=15.927 test_rmse=20.181 test_rounded_acc=0.0255
+epoch=0003 train_loss=0.0044 test_loss=0.0016 train_mae=22.878 test_mae=13.581 test_rmse=17.148 test_rounded_acc=0.0223
+epoch=0004 train_loss=0.0033 test_loss=0.0011 train_mae=19.944 test_mae=11.721 test_rmse=14.706 test_rounded_acc=0.0258
+epoch=0005 train_loss=0.0025 test_loss=0.0009 train_mae=17.326 test_mae=10.034 test_rmse=12.854 test_rounded_acc=0.0295
+epoch=0006 train_loss=0.0020 test_loss=0.0007 train_mae=15.665 test_mae=9.568 test_rmse=11.696 test_rounded_acc=0.0283
+epoch=0007 train_loss=0.0017 test_loss=0.0006 train_mae=14.431 test_mae=8.527 test_rmse=10.341 test_rounded_acc=0.0340
+epoch=0008 train_loss=0.0014 test_loss=0.0003 train_mae=13.025 test_mae=6.532 test_rmse=8.131 test_rounded_acc=0.0523
+wrote experiments/perm_invariants_20k_e8_v1/length_regression_lehmer/model.pt

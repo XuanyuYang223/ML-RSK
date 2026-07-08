@@ -14,15 +14,123 @@ from torch.utils.data import DataLoader, Dataset
 
 
 class RSKShapeDataset(Dataset):
-    def __init__(self, permutations: np.ndarray, shapes: np.ndarray) -> None:
+    def __init__(self, permutations: np.ndarray, shapes: np.ndarray, true_rows: np.ndarray | None = None) -> None:
         self.permutations = torch.as_tensor(permutations, dtype=torch.long)
         self.shapes = torch.as_tensor(shapes, dtype=torch.long)
+        self.true_rows = torch.as_tensor(shapes if true_rows is None else true_rows, dtype=torch.long)
 
     def __len__(self) -> int:
         return int(self.permutations.shape[0])
 
-    def __getitem__(self, idx: int) -> tuple[torch.Tensor, torch.Tensor]:
-        return self.permutations[idx], self.shapes[idx]
+    def __getitem__(self, idx: int) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+        return self.permutations[idx], self.shapes[idx], self.true_rows[idx]
+
+
+def inverse_permutations(permutations: np.ndarray) -> np.ndarray:
+    inverse = np.zeros_like(permutations)
+    positions = np.arange(1, permutations.shape[1] + 1, dtype=permutations.dtype)
+    for row_idx, permutation in enumerate(permutations):
+        inverse[row_idx, permutation - 1] = positions
+    return inverse
+
+
+def lehmer_codes(permutations: np.ndarray) -> np.ndarray:
+    codes = np.zeros_like(permutations)
+    n = permutations.shape[1]
+    for i in range(n - 1):
+        codes[:, i] = (permutations[:, i, None] > permutations[:, i + 1 :]).sum(axis=1)
+    return codes
+
+
+def encode_permutations(permutations: np.ndarray, representation: str) -> np.ndarray:
+    if representation == "one_line":
+        return permutations
+    if representation == "inverse":
+        return inverse_permutations(permutations)
+    if representation == "lehmer":
+        return lehmer_codes(permutations)
+    raise ValueError(f"unknown permutation representation: {representation}")
+
+
+def rows_to_deltas(shapes: np.ndarray) -> np.ndarray:
+    next_rows = np.zeros_like(shapes)
+    next_rows[:, :-1] = shapes[:, 1:]
+    return shapes - next_rows
+
+
+def deltas_to_rows(deltas: torch.Tensor) -> torch.Tensor:
+    return torch.flip(torch.cumsum(torch.flip(deltas, dims=[1]), dim=1), dims=[1])
+
+
+def generate_partitions(n: int, max_part: int | None = None) -> list[list[int]]:
+    if n == 0:
+        return [[]]
+    if max_part is None or max_part > n:
+        max_part = n
+
+    partitions = []
+    for first in range(max_part, 0, -1):
+        for rest in generate_partitions(n - first, first):
+            partitions.append([first, *rest])
+    return partitions
+
+
+_PARTITION_CACHE: dict[tuple[int, torch.device], torch.Tensor] = {}
+
+
+def partition_table(n: int, device: torch.device) -> torch.Tensor:
+    key = (n, device)
+    if key not in _PARTITION_CACHE:
+        rows = []
+        for partition in generate_partitions(n):
+            padded = partition + [0] * (n - len(partition))
+            rows.append(padded)
+        _PARTITION_CACHE[key] = torch.tensor(rows, dtype=torch.long, device=device)
+    return _PARTITION_CACHE[key]
+
+
+def encode_shapes(shapes: np.ndarray, output_mode: str) -> np.ndarray:
+    if output_mode == "rows":
+        return shapes
+    if output_mode == "deltas":
+        return rows_to_deltas(shapes)
+    raise ValueError(f"unknown output mode: {output_mode}")
+
+
+def decode_predictions(pred: torch.Tensor, output_mode: str, inference: str) -> torch.Tensor:
+    if output_mode == "deltas":
+        rows = deltas_to_rows(pred)
+    elif output_mode == "rows":
+        rows = pred
+    else:
+        raise ValueError(f"unknown output mode: {output_mode}")
+
+    if inference == "argmax":
+        return rows
+    if inference == "monotone":
+        projected = rows.clone()
+        for i in range(1, projected.shape[1]):
+            projected[:, i] = torch.minimum(projected[:, i], projected[:, i - 1])
+        return projected
+    if inference == "partition":
+        raise ValueError("partition inference needs logits; use predict_rows")
+    raise ValueError(f"unknown inference mode: {inference}")
+
+
+def predict_rows(logits: torch.Tensor, output_mode: str, inference: str) -> torch.Tensor:
+    if inference != "partition":
+        return decode_predictions(logits.argmax(dim=-1), output_mode, inference)
+    if output_mode != "rows":
+        raise ValueError("partition inference currently supports only rows output")
+
+    n = logits.shape[1]
+    partitions = partition_table(n, logits.device)
+    scores = torch.zeros((logits.shape[0], partitions.shape[0]), dtype=logits.dtype, device=logits.device)
+    batch_idx = torch.arange(logits.shape[0], device=logits.device)[:, None]
+    for row_idx in range(n):
+        scores += logits[batch_idx, row_idx, partitions[:, row_idx][None, :]]
+    best_idx = scores.argmax(dim=1)
+    return partitions[best_idx]
 
 
 class ShapeTransformer(nn.Module):
@@ -34,12 +142,13 @@ class ShapeTransformer(nn.Module):
         num_layers: int,
         dim_feedforward: int,
         dropout: float,
+        architecture: str = "encoder_decoder",
     ) -> None:
         super().__init__()
         self.n = n
+        self.architecture = architecture
         self.perm_embedding = nn.Embedding(n + 1, d_model)
         self.input_pos_embedding = nn.Embedding(n, d_model)
-        self.shape_query_embedding = nn.Embedding(n, d_model)
 
         encoder_layer = nn.TransformerEncoderLayer(
             d_model=d_model,
@@ -49,16 +158,22 @@ class ShapeTransformer(nn.Module):
             batch_first=True,
             activation="gelu",
         )
-        decoder_layer = nn.TransformerDecoderLayer(
-            d_model=d_model,
-            nhead=num_heads,
-            dim_feedforward=dim_feedforward,
-            dropout=dropout,
-            batch_first=True,
-            activation="gelu",
-        )
         self.encoder = nn.TransformerEncoder(encoder_layer, num_layers=num_layers)
-        self.decoder = nn.TransformerDecoder(decoder_layer, num_layers=num_layers)
+
+        if architecture == "encoder_decoder":
+            self.shape_query_embedding = nn.Embedding(n, d_model)
+            decoder_layer = nn.TransformerDecoderLayer(
+                d_model=d_model,
+                nhead=num_heads,
+                dim_feedforward=dim_feedforward,
+                dropout=dropout,
+                batch_first=True,
+                activation="gelu",
+            )
+            self.decoder = nn.TransformerDecoder(decoder_layer, num_layers=num_layers)
+        elif architecture != "encoder_only":
+            raise ValueError(f"unknown architecture: {architecture}")
+
         self.classifier = nn.Linear(d_model, n + 1)
 
     def forward(self, permutations: torch.Tensor) -> torch.Tensor:
@@ -69,6 +184,9 @@ class ShapeTransformer(nn.Module):
         positions = torch.arange(n, device=permutations.device)
         src = self.perm_embedding(permutations) + self.input_pos_embedding(positions)[None, :, :]
         memory = self.encoder(src)
+
+        if self.architecture == "encoder_only":
+            return self.classifier(memory)
 
         shape_queries = self.shape_query_embedding(positions)[None, :, :].expand(batch_size, -1, -1)
         decoded = self.decoder(shape_queries, memory)
@@ -85,6 +203,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--num-layers", type=int, default=3)
     parser.add_argument("--dim-feedforward", type=int, default=512)
     parser.add_argument("--dropout", type=float, default=0.1)
+    parser.add_argument("--perm-representation", choices=["one_line", "inverse", "lehmer"], default="one_line")
+    parser.add_argument("--architecture", choices=["encoder_decoder", "encoder_only"], default="encoder_decoder")
+    parser.add_argument("--output-mode", choices=["rows", "deltas"], default="rows")
+    parser.add_argument("--inference", choices=["argmax", "monotone", "partition"], default="argmax")
+    parser.add_argument("--max-samples", type=int, default=None)
     parser.add_argument("--lr", type=float, default=3e-4)
     parser.add_argument("--weight-decay", type=float, default=1e-2)
     parser.add_argument("--seed", type=int, default=0)
@@ -128,13 +251,32 @@ def split_arrays(
     return permutations[train_idx], shapes[train_idx], permutations[test_idx], shapes[test_idx]
 
 
-def compute_metrics(logits: torch.Tensor, targets: torch.Tensor) -> dict[str, float]:
-    pred = logits.argmax(dim=-1)
-    correct = pred.eq(targets)
+def split_indices(total: int, test_frac: float, seed: int) -> tuple[np.ndarray, np.ndarray]:
+    if total < 2:
+        raise ValueError("need at least two examples to make a train/test split")
+    rng = np.random.default_rng(seed)
+    order = rng.permutation(total)
+    test_size = max(1, int(round(len(order) * test_frac)))
+    train_size = len(order) - test_size
+    if train_size < 1:
+        train_size = len(order) - 1
+        test_size = 1
+    return order[:train_size], order[train_size : train_size + test_size]
+
+
+def compute_metrics(
+    logits: torch.Tensor,
+    targets: torch.Tensor,
+    true_rows: torch.Tensor,
+    output_mode: str,
+    inference: str,
+) -> dict[str, float]:
+    pred = predict_rows(logits, output_mode, inference)
+    correct = pred.eq(true_rows)
     row_acc = correct.float().mean().item()
     exact_acc = correct.all(dim=1).float().mean().item()
-    row_mae = (pred - targets).abs().float().mean().item()
-    total_box_mae = (pred.sum(dim=1) - targets.sum(dim=1)).abs().float().mean().item()
+    row_mae = (pred - true_rows).abs().float().mean().item()
+    total_box_mae = (pred.sum(dim=1) - true_rows.sum(dim=1)).abs().float().mean().item()
     return {
         "row_acc": row_acc,
         "exact_acc": exact_acc,
@@ -149,6 +291,8 @@ def run_epoch(
     criterion: nn.Module,
     device: torch.device,
     optimizer: torch.optim.Optimizer | None = None,
+    output_mode: str = "rows",
+    inference: str = "argmax",
 ) -> tuple[float, dict[str, float]]:
     is_train = optimizer is not None
     model.train(is_train)
@@ -156,13 +300,14 @@ def run_epoch(
     total_examples = 0
     metric_sums = {"row_acc": 0.0, "exact_acc": 0.0, "row_mae": 0.0, "total_box_mae": 0.0}
 
-    for permutations, shapes in loader:
+    for permutations, encoded_shapes, true_rows in loader:
         permutations = permutations.to(device)
-        shapes = shapes.to(device)
+        encoded_shapes = encoded_shapes.to(device)
+        true_rows = true_rows.to(device)
 
         with torch.set_grad_enabled(is_train):
             logits = model(permutations)
-            loss = criterion(logits.reshape(-1, logits.shape[-1]), shapes.reshape(-1))
+            loss = criterion(logits.reshape(-1, logits.shape[-1]), encoded_shapes.reshape(-1))
             if optimizer is not None:
                 optimizer.zero_grad(set_to_none=True)
                 loss.backward()
@@ -172,7 +317,7 @@ def run_epoch(
         batch_size = permutations.shape[0]
         total_loss += float(loss.item()) * batch_size
         total_examples += batch_size
-        metrics = compute_metrics(logits.detach(), shapes)
+        metrics = compute_metrics(logits.detach(), encoded_shapes, true_rows, output_mode, inference)
         for key, value in metrics.items():
             metric_sums[key] += value * batch_size
 
@@ -189,15 +334,27 @@ def main() -> None:
     permutations = data["permutations"].astype(np.int64)
     shapes = data["shapes"].astype(np.int64)
     n = int(data["n"])
+    if args.max_samples is not None:
+        permutations = permutations[: args.max_samples]
+        shapes = shapes[: args.max_samples]
 
-    train_x, train_y, test_x, test_y = split_arrays(permutations, shapes, args.test_frac, args.seed)
+    encoded_permutations = encode_permutations(permutations, args.perm_representation)
+    encoded_shapes = encode_shapes(shapes, args.output_mode)
+
+    train_idx, test_idx = split_indices(len(encoded_permutations), args.test_frac, args.seed)
+    train_x = encoded_permutations[train_idx]
+    train_y = encoded_shapes[train_idx]
+    train_rows = shapes[train_idx]
+    test_x = encoded_permutations[test_idx]
+    test_y = encoded_shapes[test_idx]
+    test_rows = shapes[test_idx]
     train_loader = DataLoader(
-        RSKShapeDataset(train_x, train_y),
+        RSKShapeDataset(train_x, train_y, train_rows),
         batch_size=args.batch_size,
         shuffle=True,
     )
     test_loader = DataLoader(
-        RSKShapeDataset(test_x, test_y),
+        RSKShapeDataset(test_x, test_y, test_rows),
         batch_size=args.batch_size,
         shuffle=False,
     )
@@ -209,23 +366,30 @@ def main() -> None:
         num_layers=args.num_layers,
         dim_feedforward=args.dim_feedforward,
         dropout=args.dropout,
+        architecture=args.architecture,
     ).to(device)
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
 
     print(
         f"dataset={args.dataset} n={n} train={len(train_x)} test={len(test_x)} "
+        f"representation={args.perm_representation} architecture={args.architecture} "
+        f"output={args.output_mode} inference={args.inference} "
         f"device={device} parameters={sum(p.numel() for p in model.parameters())}"
     )
     best_exact_acc = -1.0
     best_state = None
 
     for epoch in range(1, args.epochs + 1):
-        train_loss, train_metrics = run_epoch(model, train_loader, criterion, device, optimizer)
-        test_loss, test_metrics = run_epoch(model, test_loader, criterion, device)
+        train_loss, train_metrics = run_epoch(
+            model, train_loader, criterion, device, optimizer, args.output_mode, args.inference
+        )
+        test_loss, test_metrics = run_epoch(
+            model, test_loader, criterion, device, None, args.output_mode, args.inference
+        )
         if test_metrics["exact_acc"] > best_exact_acc:
             best_exact_acc = test_metrics["exact_acc"]
-            best_state = {key: value.detach().cpu() for key, value in model.state_dict().items()}
+            best_state = {key: value.detach().cpu().clone() for key, value in model.state_dict().items()}
         print(
             f"epoch={epoch:04d} "
             f"train_loss={train_loss:.4f} "

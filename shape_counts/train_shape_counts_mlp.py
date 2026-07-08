@@ -35,6 +35,38 @@ def hook_lengths(shape: list[int]) -> list[int]:
     return hooks
 
 
+def conjugate_shape(shape: list[int], n: int) -> list[int]:
+    return [sum(1 for row_len in shape if row_len >= col) for col in range(1, n + 1)]
+
+
+def shape_features(shape: list[int], n: int, feature_set: str) -> np.ndarray:
+    rows = np.zeros(n, dtype=np.float32)
+    rows[: len(shape)] = np.array(shape, dtype=np.float32) / n
+    if feature_set == "rows":
+        return rows
+
+    cols = np.array(conjugate_shape(shape, n), dtype=np.float32) / n
+    if feature_set == "rows_cols":
+        return np.concatenate([rows, cols]).astype(np.float32)
+
+    if feature_set == "rows_cols_hooks":
+        hooks = np.array(hook_lengths(shape), dtype=np.float32)
+        log_hooks = np.log(hooks)
+        hook_summary = np.array(
+            [
+                log_hooks.mean(),
+                log_hooks.std(),
+                log_hooks.min(),
+                log_hooks.max(),
+                log_hooks.sum() / n,
+            ],
+            dtype=np.float32,
+        )
+        return np.concatenate([rows, cols, hook_summary]).astype(np.float32)
+
+    raise ValueError(f"unknown feature set: {feature_set}")
+
+
 def log_syt_count(shape: list[int]) -> float:
     total_boxes = sum(shape)
     return math.lgamma(total_boxes + 1) - sum(math.log(hook) for hook in hook_lengths(shape))
@@ -93,6 +125,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--hidden", type=int, default=256)
     parser.add_argument("--layers", type=int, default=3)
     parser.add_argument("--dropout", type=float, default=0.05)
+    parser.add_argument("--feature-set", choices=["rows", "rows_cols", "rows_cols_hooks"], default="rows")
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--weight-decay", type=float, default=1e-4)
     parser.add_argument("--seed", type=int, default=0)
@@ -116,12 +149,18 @@ def pick_device(name: str) -> torch.device:
     return torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-def build_arrays(n: int, task: str, alphabet_size: int) -> tuple[np.ndarray, np.ndarray, list[list[int]]]:
+def build_arrays(
+    n: int,
+    task: str,
+    alphabet_size: int,
+    feature_set: str,
+) -> tuple[np.ndarray, np.ndarray, list[list[int]]]:
     shapes = integer_partitions(n)
-    x = np.zeros((len(shapes), n), dtype=np.float32)
+    feature_dim = len(shape_features(shapes[0], n, feature_set))
+    x = np.zeros((len(shapes), feature_dim), dtype=np.float32)
     y = np.zeros(len(shapes), dtype=np.float32)
     for idx, shape in enumerate(shapes):
-        x[idx, : len(shape)] = np.array(shape, dtype=np.float32) / n
+        x[idx] = shape_features(shape, n, feature_set)
         if task == "syt":
             y[idx] = log_syt_count(shape)
         else:
@@ -174,7 +213,7 @@ def main() -> None:
     set_seed(args.seed)
     device = pick_device(args.device)
 
-    x, y, shapes = build_arrays(args.n, args.task, args.alphabet_size)
+    x, y, shapes = build_arrays(args.n, args.task, args.alphabet_size, args.feature_set)
     train_idx, test_idx = split_indices(len(x), args.test_frac, args.seed)
     y_mean = float(y[train_idx].mean())
     y_std = float(y[train_idx].std() + 1e-8)
@@ -191,13 +230,14 @@ def main() -> None:
         shuffle=False,
     )
 
-    model = ShapeCountMLP(input_dim=args.n, hidden=args.hidden, layers=args.layers, dropout=args.dropout).to(device)
+    model = ShapeCountMLP(input_dim=x.shape[1], hidden=args.hidden, layers=args.layers, dropout=args.dropout).to(device)
     criterion = nn.MSELoss()
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
 
     print(
         f"task={args.task} n={args.n} partitions={len(shapes)} train={len(train_idx)} "
-        f"test={len(test_idx)} device={device} parameters={sum(p.numel() for p in model.parameters())}"
+        f"test={len(test_idx)} feature_set={args.feature_set} input_dim={x.shape[1]} "
+        f"device={device} parameters={sum(p.numel() for p in model.parameters())}"
     )
     print(f"target_log_mean={y_mean:.4f} target_log_std={y_std:.4f}")
 
@@ -210,7 +250,7 @@ def main() -> None:
         train_log_mae = train_scaled_mae * y_std
         if test_log_mae < best_test_log_mae:
             best_test_log_mae = test_log_mae
-            best_state = {key: value.detach().cpu() for key, value in model.state_dict().items()}
+            best_state = {key: value.detach().cpu().clone() for key, value in model.state_dict().items()}
         if epoch == 1 or epoch % max(1, args.epochs // 10) == 0:
             print(
                 f"epoch={epoch:04d} train_loss={train_loss:.6f} test_loss={test_loss:.6f} "
@@ -250,6 +290,7 @@ def main() -> None:
             "model_state_dict": best_state if best_state is not None else model.state_dict(),
             "n": args.n,
             "task": args.task,
+            "feature_set": args.feature_set,
             "alphabet_size": args.alphabet_size,
             "target_log_mean": y_mean,
             "target_log_std": y_std,

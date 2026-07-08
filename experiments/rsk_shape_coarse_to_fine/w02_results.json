@@ -1,0 +1,1267 @@
+{
+  "args": {
+    "dataset": "data/rsk_shape/rsk_n30_m100000_seed2.npz",
+    "eval_dataset": "data/rsk_shape/rsk_n30_m2000_seed1_test.npz",
+    "classifier_checkpoint": "experiments/rsk_shape_partition_classifier_100k_e20/lehmer/model.pt",
+    "coarse_weight": 0.2,
+    "epochs": 8,
+    "batch_size": 512,
+    "lr": 0.0001,
+    "weight_decay": 0.01,
+    "seed": 0,
+    "test_frac": 0.2,
+    "max_samples": null,
+    "device": "cuda",
+    "model_out": "experiments/rsk_shape_coarse_to_fine/w02_model.pt",
+    "results_out": "experiments/rsk_shape_coarse_to_fine/w02_results.json"
+  },
+  "best_valid_exact_acc": 0.0261,
+  "best_valid_top50_acc": 0.4134,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 7.579056848144531,
+      "valid_loss": 7.255203974151612,
+      "train": {
+        "partition_acc": 0.0244125,
+        "partition_top5": 0.0908,
+        "partition_top10": 0.1515625,
+        "partition_top50": 0.42025,
+        "partition_top100": 0.5912375,
+        "first_row_acc": 0.3345375,
+        "num_rows_acc": 0.3467125,
+        "first2_acc": 0.102075
+      },
+      "valid": {
+        "partition_acc": 0.0246,
+        "partition_top5": 0.088,
+        "partition_top10": 0.1453,
+        "partition_top50": 0.40085,
+        "partition_top100": 0.56745,
+        "first_row_acc": 0.42575,
+        "num_rows_acc": 0.40015,
+        "first2_acc": 0.16465
+      },
+      "valid_decode": {
+        "argmax": {
+          "exact_acc": 0.0246,
+          "row_acc": 0.8744083793640137,
+          "row_mae": 0.13250667371749877,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_top1": {
+          "exact_acc": 0.02125,
+          "row_acc": 0.8727333811759949,
+          "row_mae": 0.13485667309761049,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "num_rows_top1": {
+          "exact_acc": 0.0216,
+          "row_acc": 0.8716917098999023,
+          "row_mae": 0.13560667452812195,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first2_top1": {
+          "exact_acc": 0.01625,
+          "row_acc": 0.8690283777236939,
+          "row_mae": 0.14078334100246429,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_num_rows_top1": {
+          "exact_acc": 0.0198,
+          "row_acc": 0.8700917133331298,
+          "row_mae": 0.13794000747203827,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_first2_top1": {
+          "exact_acc": 0.02215,
+          "row_acc": 0.8722383814811706,
+          "row_mae": 0.13546667482852937,
+          "total_box_mae": 0.0,
+          "coverage": 0.56695
+        },
+        "first_row_top3": {
+          "exact_acc": 0.02465,
+          "row_acc": 0.8744100425720215,
+          "row_mae": 0.13250334119796753,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "num_rows_top3": {
+          "exact_acc": 0.0246,
+          "row_acc": 0.8743917106628418,
+          "row_mae": 0.13252667417526245,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first2_top3": {
+          "exact_acc": 0.02395,
+          "row_acc": 0.8735333750724793,
+          "row_mae": 0.13373334050178529,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_num_rows_top3": {
+          "exact_acc": 0.02465,
+          "row_acc": 0.8743883735656738,
+          "row_mae": 0.13253000745773316,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_first2_top3": {
+          "exact_acc": 0.024,
+          "row_acc": 0.8735033808708191,
+          "row_mae": 0.13376000561714171,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_top5": {
+          "exact_acc": 0.0246,
+          "row_acc": 0.8744100471496582,
+          "row_mae": 0.13250667409896852,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "num_rows_top5": {
+          "exact_acc": 0.0246,
+          "row_acc": 0.8743967124938965,
+          "row_mae": 0.13252000722885132,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first2_top5": {
+          "exact_acc": 0.0242,
+          "row_acc": 0.8740967123031617,
+          "row_mae": 0.13287667474746703,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_num_rows_top5": {
+          "exact_acc": 0.0246,
+          "row_acc": 0.8743967124938965,
+          "row_mae": 0.13252334089279175,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_first2_top5": {
+          "exact_acc": 0.0242,
+          "row_acc": 0.8740967123031617,
+          "row_mae": 0.13287667474746703,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        }
+      },
+      "best_decode": "first_row_top3"
+    },
+    {
+      "epoch": 2,
+      "train_loss": 7.026332446289063,
+      "valid_loss": 7.058945822143555,
+      "train": {
+        "partition_acc": 0.0251375,
+        "partition_top5": 0.0926625,
+        "partition_top10": 0.154675,
+        "partition_top50": 0.42695,
+        "partition_top100": 0.5978375,
+        "first_row_acc": 0.4357,
+        "num_rows_acc": 0.412,
+        "first2_acc": 0.1925125
+      },
+      "valid": {
+        "partition_acc": 0.0244,
+        "partition_top5": 0.0896,
+        "partition_top10": 0.14715,
+        "partition_top50": 0.407,
+        "partition_top100": 0.57765,
+        "first_row_acc": 0.44395,
+        "num_rows_acc": 0.42155,
+        "first2_acc": 0.2069
+      },
+      "valid_decode": {
+        "argmax": {
+          "exact_acc": 0.0244,
+          "row_acc": 0.8748200455665588,
+          "row_mae": 0.13206000657081604,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_top1": {
+          "exact_acc": 0.02245,
+          "row_acc": 0.8739767115592957,
+          "row_mae": 0.13294667325019838,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "num_rows_top1": {
+          "exact_acc": 0.0228,
+          "row_acc": 0.8736300477027893,
+          "row_mae": 0.1334633406162262,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first2_top1": {
+          "exact_acc": 0.0219,
+          "row_acc": 0.8727767140388488,
+          "row_mae": 0.13468333954811096,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_num_rows_top1": {
+          "exact_acc": 0.02125,
+          "row_acc": 0.8729967104911804,
+          "row_mae": 0.13417334156036376,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_first2_top1": {
+          "exact_acc": 0.0235,
+          "row_acc": 0.8739683739662171,
+          "row_mae": 0.13296000728607177,
+          "total_box_mae": 0.0,
+          "coverage": 0.7726
+        },
+        "first_row_top3": {
+          "exact_acc": 0.0244,
+          "row_acc": 0.8748183777809143,
+          "row_mae": 0.13205667290687562,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "num_rows_top3": {
+          "exact_acc": 0.0244,
+          "row_acc": 0.8748200455665588,
+          "row_mae": 0.13206000657081604,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first2_top3": {
+          "exact_acc": 0.02475,
+          "row_acc": 0.8745050454139709,
+          "row_mae": 0.13231667346954346,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_num_rows_top3": {
+          "exact_acc": 0.0244,
+          "row_acc": 0.8748183777809143,
+          "row_mae": 0.13205667290687562,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_first2_top3": {
+          "exact_acc": 0.02475,
+          "row_acc": 0.8745050454139709,
+          "row_mae": 0.13231667346954346,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_top5": {
+          "exact_acc": 0.0244,
+          "row_acc": 0.8748200455665588,
+          "row_mae": 0.13206000657081604,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "num_rows_top5": {
+          "exact_acc": 0.0244,
+          "row_acc": 0.8748200455665588,
+          "row_mae": 0.13206000657081604,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first2_top5": {
+          "exact_acc": 0.02435,
+          "row_acc": 0.8748067109107971,
+          "row_mae": 0.1320500063419342,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_num_rows_top5": {
+          "exact_acc": 0.0244,
+          "row_acc": 0.8748200455665588,
+          "row_mae": 0.13206000657081604,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_first2_top5": {
+          "exact_acc": 0.02435,
+          "row_acc": 0.8748067109107971,
+          "row_mae": 0.1320500063419342,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        }
+      },
+      "best_decode": "first2_top3"
+    },
+    {
+      "epoch": 3,
+      "train_loss": 6.897376094055176,
+      "valid_loss": 6.996498658752442,
+      "train": {
+        "partition_acc": 0.0255125,
+        "partition_top5": 0.0942625,
+        "partition_top10": 0.1565875,
+        "partition_top50": 0.4313125,
+        "partition_top100": 0.60365,
+        "first_row_acc": 0.4482375,
+        "num_rows_acc": 0.42425,
+        "first2_acc": 0.211575
+      },
+      "valid": {
+        "partition_acc": 0.0247,
+        "partition_top5": 0.08895,
+        "partition_top10": 0.14885,
+        "partition_top50": 0.4079,
+        "partition_top100": 0.5787,
+        "first_row_acc": 0.45365,
+        "num_rows_acc": 0.4303,
+        "first2_acc": 0.21315
+      },
+      "valid_decode": {
+        "argmax": {
+          "exact_acc": 0.0247,
+          "row_acc": 0.8749267120361328,
+          "row_mae": 0.13171667320728303,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_top1": {
+          "exact_acc": 0.02345,
+          "row_acc": 0.8746400450706482,
+          "row_mae": 0.13192000660896303,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "num_rows_top1": {
+          "exact_acc": 0.02335,
+          "row_acc": 0.8745000525474549,
+          "row_mae": 0.1323400069952011,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first2_top1": {
+          "exact_acc": 0.02335,
+          "row_acc": 0.8734933790206909,
+          "row_mae": 0.13332000670433045,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_num_rows_top1": {
+          "exact_acc": 0.02195,
+          "row_acc": 0.8741017122268677,
+          "row_mae": 0.13260334067344665,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_first2_top1": {
+          "exact_acc": 0.024,
+          "row_acc": 0.8741633752822876,
+          "row_mae": 0.1323433403491974,
+          "total_box_mae": 0.0,
+          "coverage": 0.8364
+        },
+        "first_row_top3": {
+          "exact_acc": 0.0247,
+          "row_acc": 0.8749167098999023,
+          "row_mae": 0.13172667305469513,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "num_rows_top3": {
+          "exact_acc": 0.0247,
+          "row_acc": 0.874930044555664,
+          "row_mae": 0.13171333992481232,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first2_top3": {
+          "exact_acc": 0.0252,
+          "row_acc": 0.8749400492668152,
+          "row_mae": 0.13159000737667084,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_num_rows_top3": {
+          "exact_acc": 0.0247,
+          "row_acc": 0.8749200424194336,
+          "row_mae": 0.13172333977222442,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_first2_top3": {
+          "exact_acc": 0.0252,
+          "row_acc": 0.8749400492668152,
+          "row_mae": 0.13159000737667084,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_top5": {
+          "exact_acc": 0.0247,
+          "row_acc": 0.8749267120361328,
+          "row_mae": 0.13171667320728303,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "num_rows_top5": {
+          "exact_acc": 0.0247,
+          "row_acc": 0.8749267120361328,
+          "row_mae": 0.13171667320728303,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first2_top5": {
+          "exact_acc": 0.02465,
+          "row_acc": 0.8749300415039063,
+          "row_mae": 0.13169000656604768,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_num_rows_top5": {
+          "exact_acc": 0.0247,
+          "row_acc": 0.8749267120361328,
+          "row_mae": 0.13171667320728303,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_first2_top5": {
+          "exact_acc": 0.02465,
+          "row_acc": 0.8749300415039063,
+          "row_mae": 0.13169000656604768,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        }
+      },
+      "best_decode": "first2_top3"
+    },
+    {
+      "epoch": 4,
+      "train_loss": 6.842915046691894,
+      "valid_loss": 6.95880782699585,
+      "train": {
+        "partition_acc": 0.025575,
+        "partition_top5": 0.09555,
+        "partition_top10": 0.1597625,
+        "partition_top50": 0.4346625,
+        "partition_top100": 0.6065625,
+        "first_row_acc": 0.4529125,
+        "num_rows_acc": 0.4305375,
+        "first2_acc": 0.2179625
+      },
+      "valid": {
+        "partition_acc": 0.02445,
+        "partition_top5": 0.09205,
+        "partition_top10": 0.15055,
+        "partition_top50": 0.41145,
+        "partition_top100": 0.58215,
+        "first_row_acc": 0.4562,
+        "num_rows_acc": 0.4327,
+        "first2_acc": 0.21825
+      },
+      "valid_decode": {
+        "argmax": {
+          "exact_acc": 0.02445,
+          "row_acc": 0.8755600393295289,
+          "row_mae": 0.13096667380332946,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_top1": {
+          "exact_acc": 0.0237,
+          "row_acc": 0.8752817076683045,
+          "row_mae": 0.13110000658035278,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "num_rows_top1": {
+          "exact_acc": 0.02345,
+          "row_acc": 0.8752117053031921,
+          "row_mae": 0.13145000729560852,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first2_top1": {
+          "exact_acc": 0.02425,
+          "row_acc": 0.8745867079734803,
+          "row_mae": 0.13193334054946898,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_num_rows_top1": {
+          "exact_acc": 0.0227,
+          "row_acc": 0.8749083784103393,
+          "row_mae": 0.13163333992958068,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_first2_top1": {
+          "exact_acc": 0.02465,
+          "row_acc": 0.875025041103363,
+          "row_mae": 0.13135667309761048,
+          "total_box_mae": 0.0,
+          "coverage": 0.8555
+        },
+        "first_row_top3": {
+          "exact_acc": 0.02445,
+          "row_acc": 0.8755600393295289,
+          "row_mae": 0.13096667380332946,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "num_rows_top3": {
+          "exact_acc": 0.02445,
+          "row_acc": 0.8755600393295289,
+          "row_mae": 0.13096667380332946,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first2_top3": {
+          "exact_acc": 0.0247,
+          "row_acc": 0.8755200400352477,
+          "row_mae": 0.13087667355537413,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_num_rows_top3": {
+          "exact_acc": 0.02445,
+          "row_acc": 0.8755600393295289,
+          "row_mae": 0.13096667380332946,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_first2_top3": {
+          "exact_acc": 0.0247,
+          "row_acc": 0.8755200400352477,
+          "row_mae": 0.13087667355537413,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_top5": {
+          "exact_acc": 0.02445,
+          "row_acc": 0.8755600393295289,
+          "row_mae": 0.13096667380332946,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "num_rows_top5": {
+          "exact_acc": 0.02445,
+          "row_acc": 0.8755600393295289,
+          "row_mae": 0.13096667380332946,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first2_top5": {
+          "exact_acc": 0.0245,
+          "row_acc": 0.8755400442123413,
+          "row_mae": 0.13097000784873963,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_num_rows_top5": {
+          "exact_acc": 0.02445,
+          "row_acc": 0.8755600393295289,
+          "row_mae": 0.13096667380332946,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_first2_top5": {
+          "exact_acc": 0.0245,
+          "row_acc": 0.8755400442123413,
+          "row_mae": 0.13097000784873963,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        }
+      },
+      "best_decode": "first2_top3"
+    },
+    {
+      "epoch": 5,
+      "train_loss": 6.809956632232666,
+      "valid_loss": 6.942957234191894,
+      "train": {
+        "partition_acc": 0.0261375,
+        "partition_top5": 0.0961875,
+        "partition_top10": 0.1610375,
+        "partition_top50": 0.43815,
+        "partition_top100": 0.6111125,
+        "first_row_acc": 0.453075,
+        "num_rows_acc": 0.4321125,
+        "first2_acc": 0.2207625
+      },
+      "valid": {
+        "partition_acc": 0.0255,
+        "partition_top5": 0.0892,
+        "partition_top10": 0.15065,
+        "partition_top50": 0.4132,
+        "partition_top100": 0.5845,
+        "first_row_acc": 0.4571,
+        "num_rows_acc": 0.43785,
+        "first2_acc": 0.22195
+      },
+      "valid_decode": {
+        "argmax": {
+          "exact_acc": 0.0255,
+          "row_acc": 0.8760400442123413,
+          "row_mae": 0.13055667243003846,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_top1": {
+          "exact_acc": 0.0248,
+          "row_acc": 0.8756117105484009,
+          "row_mae": 0.1309400071620941,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "num_rows_top1": {
+          "exact_acc": 0.02485,
+          "row_acc": 0.8759117170333862,
+          "row_mae": 0.1308133405685425,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first2_top1": {
+          "exact_acc": 0.02445,
+          "row_acc": 0.8749367156982422,
+          "row_mae": 0.13158667409420013,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_num_rows_top1": {
+          "exact_acc": 0.0235,
+          "row_acc": 0.8755667135238647,
+          "row_mae": 0.13113333911895753,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_first2_top1": {
+          "exact_acc": 0.025,
+          "row_acc": 0.8753883855819702,
+          "row_mae": 0.13102334032058716,
+          "total_box_mae": 0.0,
+          "coverage": 0.8528
+        },
+        "first_row_top3": {
+          "exact_acc": 0.0255,
+          "row_acc": 0.8760400442123413,
+          "row_mae": 0.13055667243003846,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "num_rows_top3": {
+          "exact_acc": 0.0255,
+          "row_acc": 0.8760400442123413,
+          "row_mae": 0.13055667243003846,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first2_top3": {
+          "exact_acc": 0.02585,
+          "row_acc": 0.8760217123985291,
+          "row_mae": 0.13044000706672668,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_num_rows_top3": {
+          "exact_acc": 0.0255,
+          "row_acc": 0.8760400442123413,
+          "row_mae": 0.13055667243003846,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_first2_top3": {
+          "exact_acc": 0.02585,
+          "row_acc": 0.8760217123985291,
+          "row_mae": 0.13044000706672668,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_top5": {
+          "exact_acc": 0.0255,
+          "row_acc": 0.8760400442123413,
+          "row_mae": 0.13055667243003846,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "num_rows_top5": {
+          "exact_acc": 0.0255,
+          "row_acc": 0.8760400442123413,
+          "row_mae": 0.13055667243003846,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first2_top5": {
+          "exact_acc": 0.0256,
+          "row_acc": 0.8760400426864624,
+          "row_mae": 0.13054667448997498,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_num_rows_top5": {
+          "exact_acc": 0.0255,
+          "row_acc": 0.8760400442123413,
+          "row_mae": 0.13055667243003846,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_first2_top5": {
+          "exact_acc": 0.0256,
+          "row_acc": 0.8760400426864624,
+          "row_mae": 0.13054667448997498,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        }
+      },
+      "best_decode": "first2_top3"
+    },
+    {
+      "epoch": 6,
+      "train_loss": 6.7889819290161135,
+      "valid_loss": 6.933099308776855,
+      "train": {
+        "partition_acc": 0.0263625,
+        "partition_top5": 0.097825,
+        "partition_top10": 0.161375,
+        "partition_top50": 0.43925,
+        "partition_top100": 0.6131875,
+        "first_row_acc": 0.4533875,
+        "num_rows_acc": 0.43485,
+        "first2_acc": 0.2229
+      },
+      "valid": {
+        "partition_acc": 0.0261,
+        "partition_top5": 0.09205,
+        "partition_top10": 0.15115,
+        "partition_top50": 0.4134,
+        "partition_top100": 0.5861,
+        "first_row_acc": 0.459,
+        "num_rows_acc": 0.4373,
+        "first2_acc": 0.221
+      },
+      "valid_decode": {
+        "argmax": {
+          "exact_acc": 0.0261,
+          "row_acc": 0.8754517146110534,
+          "row_mae": 0.13099333951473235,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_top1": {
+          "exact_acc": 0.02495,
+          "row_acc": 0.875078378200531,
+          "row_mae": 0.131323339509964,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "num_rows_top1": {
+          "exact_acc": 0.0253,
+          "row_acc": 0.8753550439834594,
+          "row_mae": 0.13116667394638062,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first2_top1": {
+          "exact_acc": 0.0254,
+          "row_acc": 0.8746800478935242,
+          "row_mae": 0.13173333973884582,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_num_rows_top1": {
+          "exact_acc": 0.0242,
+          "row_acc": 0.8749250455856323,
+          "row_mae": 0.13159000720977784,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_first2_top1": {
+          "exact_acc": 0.0256,
+          "row_acc": 0.8750733790397645,
+          "row_mae": 0.131233340382576,
+          "total_box_mae": 0.0,
+          "coverage": 0.87005
+        },
+        "first_row_top3": {
+          "exact_acc": 0.0261,
+          "row_acc": 0.8754517146110534,
+          "row_mae": 0.13099333951473235,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "num_rows_top3": {
+          "exact_acc": 0.0261,
+          "row_acc": 0.8754517146110534,
+          "row_mae": 0.13099333951473235,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first2_top3": {
+          "exact_acc": 0.02605,
+          "row_acc": 0.8754233763694763,
+          "row_mae": 0.13087000856399536,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_num_rows_top3": {
+          "exact_acc": 0.0261,
+          "row_acc": 0.8754517146110534,
+          "row_mae": 0.13099333951473235,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_first2_top3": {
+          "exact_acc": 0.02605,
+          "row_acc": 0.8754233763694763,
+          "row_mae": 0.13087000856399536,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_top5": {
+          "exact_acc": 0.0261,
+          "row_acc": 0.8754517146110534,
+          "row_mae": 0.13099333951473235,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "num_rows_top5": {
+          "exact_acc": 0.0261,
+          "row_acc": 0.8754517146110534,
+          "row_mae": 0.13099333951473235,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first2_top5": {
+          "exact_acc": 0.0261,
+          "row_acc": 0.8754350474357605,
+          "row_mae": 0.13100000607967377,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_num_rows_top5": {
+          "exact_acc": 0.0261,
+          "row_acc": 0.8754517146110534,
+          "row_mae": 0.13099333951473235,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_first2_top5": {
+          "exact_acc": 0.0261,
+          "row_acc": 0.8754350474357605,
+          "row_mae": 0.13100000607967377,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        }
+      },
+      "best_decode": "argmax"
+    },
+    {
+      "epoch": 7,
+      "train_loss": 6.769465023040771,
+      "valid_loss": 6.91646176147461,
+      "train": {
+        "partition_acc": 0.0271375,
+        "partition_top5": 0.0971625,
+        "partition_top10": 0.162775,
+        "partition_top50": 0.4428,
+        "partition_top100": 0.6153,
+        "first_row_acc": 0.4565875,
+        "num_rows_acc": 0.43545,
+        "first2_acc": 0.22365
+      },
+      "valid": {
+        "partition_acc": 0.02535,
+        "partition_top5": 0.09215,
+        "partition_top10": 0.1505,
+        "partition_top50": 0.4154,
+        "partition_top100": 0.58845,
+        "first_row_acc": 0.46215,
+        "num_rows_acc": 0.43965,
+        "first2_acc": 0.2215
+      },
+      "valid_decode": {
+        "argmax": {
+          "exact_acc": 0.02535,
+          "row_acc": 0.8758033769607544,
+          "row_mae": 0.13065667414665222,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_top1": {
+          "exact_acc": 0.02385,
+          "row_acc": 0.8755233690261841,
+          "row_mae": 0.13089000754356384,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "num_rows_top1": {
+          "exact_acc": 0.02535,
+          "row_acc": 0.8760317110061645,
+          "row_mae": 0.13052667384147645,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first2_top1": {
+          "exact_acc": 0.02275,
+          "row_acc": 0.8747517049789428,
+          "row_mae": 0.13177667441368102,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_num_rows_top1": {
+          "exact_acc": 0.0232,
+          "row_acc": 0.8756100441932678,
+          "row_mae": 0.1309500063419342,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_first2_top1": {
+          "exact_acc": 0.0234,
+          "row_acc": 0.8752100473403931,
+          "row_mae": 0.13116000757217408,
+          "total_box_mae": 0.0,
+          "coverage": 0.87505
+        },
+        "first_row_top3": {
+          "exact_acc": 0.02535,
+          "row_acc": 0.8758033769607544,
+          "row_mae": 0.13065667414665222,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "num_rows_top3": {
+          "exact_acc": 0.02535,
+          "row_acc": 0.8758033769607544,
+          "row_mae": 0.13065667414665222,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first2_top3": {
+          "exact_acc": 0.0256,
+          "row_acc": 0.8758467100143432,
+          "row_mae": 0.13052000522613524,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_num_rows_top3": {
+          "exact_acc": 0.02535,
+          "row_acc": 0.8758033769607544,
+          "row_mae": 0.13065667414665222,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_first2_top3": {
+          "exact_acc": 0.0256,
+          "row_acc": 0.8758467100143432,
+          "row_mae": 0.13052000522613524,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_top5": {
+          "exact_acc": 0.02535,
+          "row_acc": 0.8758033769607544,
+          "row_mae": 0.13065667414665222,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "num_rows_top5": {
+          "exact_acc": 0.02535,
+          "row_acc": 0.8758033769607544,
+          "row_mae": 0.13065667414665222,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first2_top5": {
+          "exact_acc": 0.02535,
+          "row_acc": 0.8757883790969848,
+          "row_mae": 0.13066667437553406,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_num_rows_top5": {
+          "exact_acc": 0.02535,
+          "row_acc": 0.8758033769607544,
+          "row_mae": 0.13065667414665222,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_first2_top5": {
+          "exact_acc": 0.02535,
+          "row_acc": 0.8757883790969848,
+          "row_mae": 0.13066667437553406,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        }
+      },
+      "best_decode": "first2_top3"
+    },
+    {
+      "epoch": 8,
+      "train_loss": 6.752472192382813,
+      "valid_loss": 6.90883314666748,
+      "train": {
+        "partition_acc": 0.0263875,
+        "partition_top5": 0.0984,
+        "partition_top10": 0.164525,
+        "partition_top50": 0.4456125,
+        "partition_top100": 0.61845,
+        "first_row_acc": 0.4588875,
+        "num_rows_acc": 0.4379125,
+        "first2_acc": 0.2237875
+      },
+      "valid": {
+        "partition_acc": 0.0257,
+        "partition_top5": 0.09205,
+        "partition_top10": 0.1517,
+        "partition_top50": 0.4148,
+        "partition_top100": 0.58695,
+        "first_row_acc": 0.46125,
+        "num_rows_acc": 0.4416,
+        "first2_acc": 0.22485
+      },
+      "valid_decode": {
+        "argmax": {
+          "exact_acc": 0.0257,
+          "row_acc": 0.8761100464820862,
+          "row_mae": 0.1304000075340271,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_top1": {
+          "exact_acc": 0.02435,
+          "row_acc": 0.8758617153167725,
+          "row_mae": 0.13052333986759185,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "num_rows_top1": {
+          "exact_acc": 0.02555,
+          "row_acc": 0.876133380317688,
+          "row_mae": 0.13053667349815368,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first2_top1": {
+          "exact_acc": 0.02435,
+          "row_acc": 0.8754483835220337,
+          "row_mae": 0.130933340549469,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_num_rows_top1": {
+          "exact_acc": 0.0241,
+          "row_acc": 0.8757850449562072,
+          "row_mae": 0.1307633409023285,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_first2_top1": {
+          "exact_acc": 0.0239,
+          "row_acc": 0.8756400467872619,
+          "row_mae": 0.13065334076881407,
+          "total_box_mae": 0.0,
+          "coverage": 0.8772
+        },
+        "first_row_top3": {
+          "exact_acc": 0.0257,
+          "row_acc": 0.8761117142677307,
+          "row_mae": 0.1303966742515564,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "num_rows_top3": {
+          "exact_acc": 0.0257,
+          "row_acc": 0.8761100464820862,
+          "row_mae": 0.1304000075340271,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first2_top3": {
+          "exact_acc": 0.02585,
+          "row_acc": 0.8760967103004456,
+          "row_mae": 0.13026334047317506,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_num_rows_top3": {
+          "exact_acc": 0.0257,
+          "row_acc": 0.8761117142677307,
+          "row_mae": 0.1303966742515564,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_first2_top3": {
+          "exact_acc": 0.02585,
+          "row_acc": 0.8760967103004456,
+          "row_mae": 0.13026334047317506,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_top5": {
+          "exact_acc": 0.0257,
+          "row_acc": 0.8761100464820862,
+          "row_mae": 0.1304000075340271,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "num_rows_top5": {
+          "exact_acc": 0.0257,
+          "row_acc": 0.8761100464820862,
+          "row_mae": 0.1304000075340271,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first2_top5": {
+          "exact_acc": 0.0257,
+          "row_acc": 0.8760783768653869,
+          "row_mae": 0.13042000646591187,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_num_rows_top5": {
+          "exact_acc": 0.0257,
+          "row_acc": 0.8761100464820862,
+          "row_mae": 0.1304000075340271,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        },
+        "first_row_and_first2_top5": {
+          "exact_acc": 0.0257,
+          "row_acc": 0.8760783768653869,
+          "row_mae": 0.13042000646591187,
+          "total_box_mae": 0.0,
+          "coverage": 1.0
+        }
+      },
+      "best_decode": "first2_top3"
+    }
+  ],
+  "eval_metrics": {
+    "partition_acc": 0.029500000029802322,
+    "partition_top5": 0.08950000029802323,
+    "partition_top10": 0.15749999988079072,
+    "partition_top50": 0.4090000026226044,
+    "partition_top100": 0.5830000028610229,
+    "first_row_acc": 0.4745000007152557,
+    "num_rows_acc": 0.43699999785423277,
+    "first2_acc": 0.22300000083446503
+  },
+  "eval_decode": {
+    "argmax": {
+      "exact_acc": 0.029500000029802322,
+      "row_acc": 0.8752666954994202,
+      "row_mae": 0.13103334057331084,
+      "total_box_mae": 0.0,
+      "coverage": 1.0
+    },
+    "first_row_top1": {
+      "exact_acc": 0.030999999865889548,
+      "row_acc": 0.8747500448226929,
+      "row_mae": 0.13150000643730164,
+      "total_box_mae": 0.0,
+      "coverage": 1.0
+    },
+    "num_rows_top1": {
+      "exact_acc": 0.02799999986588955,
+      "row_acc": 0.8752333693504334,
+      "row_mae": 0.13136667382717132,
+      "total_box_mae": 0.0,
+      "coverage": 1.0
+    },
+    "first2_top1": {
+      "exact_acc": 0.02700000023841858,
+      "row_acc": 0.8737000432014466,
+      "row_mae": 0.13263333308696748,
+      "total_box_mae": 0.0,
+      "coverage": 1.0
+    },
+    "first_row_and_num_rows_top1": {
+      "exact_acc": 0.02999999986588955,
+      "row_acc": 0.8747166895866394,
+      "row_mae": 0.13180000281333923,
+      "total_box_mae": 0.0,
+      "coverage": 1.0
+    },
+    "first_row_and_first2_top1": {
+      "exact_acc": 0.027499999865889548,
+      "row_acc": 0.874250030040741,
+      "row_mae": 0.13203333950042725,
+      "total_box_mae": 0.0,
+      "coverage": 0.8714999990463257
+    },
+    "first_row_top3": {
+      "exact_acc": 0.029500000029802322,
+      "row_acc": 0.8752666954994202,
+      "row_mae": 0.13103334057331084,
+      "total_box_mae": 0.0,
+      "coverage": 1.0
+    },
+    "num_rows_top3": {
+      "exact_acc": 0.029500000029802322,
+      "row_acc": 0.8752666954994202,
+      "row_mae": 0.13103334057331084,
+      "total_box_mae": 0.0,
+      "coverage": 1.0
+    },
+    "first2_top3": {
+      "exact_acc": 0.02949999986588955,
+      "row_acc": 0.8750833759307861,
+      "row_mae": 0.13113334238529206,
+      "total_box_mae": 0.0,
+      "coverage": 1.0
+    },
+    "first_row_and_num_rows_top3": {
+      "exact_acc": 0.029500000029802322,
+      "row_acc": 0.8752666954994202,
+      "row_mae": 0.13103334057331084,
+      "total_box_mae": 0.0,
+      "coverage": 1.0
+    },
+    "first_row_and_first2_top3": {
+      "exact_acc": 0.02949999986588955,
+      "row_acc": 0.8750833759307861,
+      "row_mae": 0.13113334238529206,
+      "total_box_mae": 0.0,
+      "coverage": 1.0
+    },
+    "first_row_top5": {
+      "exact_acc": 0.029500000029802322,
+      "row_acc": 0.8752666954994202,
+      "row_mae": 0.13103334057331084,
+      "total_box_mae": 0.0,
+      "coverage": 1.0
+    },
+    "num_rows_top5": {
+      "exact_acc": 0.029500000029802322,
+      "row_acc": 0.8752666954994202,
+      "row_mae": 0.13103334057331084,
+      "total_box_mae": 0.0,
+      "coverage": 1.0
+    },
+    "first2_top5": {
+      "exact_acc": 0.029500000029802322,
+      "row_acc": 0.8753333759307861,
+      "row_mae": 0.13096667087078095,
+      "total_box_mae": 0.0,
+      "coverage": 1.0
+    },
+    "first_row_and_num_rows_top5": {
+      "exact_acc": 0.029500000029802322,
+      "row_acc": 0.8752666954994202,
+      "row_mae": 0.13103334057331084,
+      "total_box_mae": 0.0,
+      "coverage": 1.0
+    },
+    "first_row_and_first2_top5": {
+      "exact_acc": 0.029500000029802322,
+      "row_acc": 0.8753333759307861,
+      "row_mae": 0.13096667087078095,
+      "total_box_mae": 0.0,
+      "coverage": 1.0
+    }
+  },
+  "best_eval_decode": "first_row_top1"
+}

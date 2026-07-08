@@ -1,0 +1,1 @@
+/home/yangx/miniforge3/envs/sage/bin/python rsk_shape/eval_shape_partition_rerank.py data/rsk_shape/rsk_n30_m2000_seed1_test.npz --classifier-checkpoint experiments/rsk_shape_partition_classifier_100k_e20/lehmer/model.pt --row-checkpoint experiments/rsk_shape_scale_100k_e5/lehmer_encdec_rows_argmax/model.pt --top-k 10 --batch-size 512 --device cuda

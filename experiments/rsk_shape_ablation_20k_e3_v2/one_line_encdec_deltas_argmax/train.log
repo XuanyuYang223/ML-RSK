@@ -1,0 +1,5 @@
+dataset=data/rsk_shape/rsk_n30_m100000_seed2.npz n=30 train=16000 test=4000 representation=one_line architecture=encoder_decoder output=deltas inference=argmax device=cpu parameters=241311
+epoch=0001 train_loss=1.7595 test_loss=0.8369 train_row_acc=0.490 test_row_acc=0.720 test_exact_acc=0.000 test_row_mae=1.000 test_total_box_mae=30.000
+epoch=0002 train_loss=0.7061 test_loss=0.5279 train_row_acc=0.720 test_row_acc=0.727 test_exact_acc=0.000 test_row_mae=0.706 test_total_box_mae=21.155
+epoch=0003 train_loss=0.4673 test_loss=0.4098 train_row_acc=0.728 test_row_acc=0.724 test_exact_acc=0.000 test_row_mae=0.585 test_total_box_mae=17.545
+wrote experiments/rsk_shape_ablation_20k_e3_v2/one_line_encdec_deltas_argmax/model.pt

@@ -1,0 +1,39 @@
+task=syt n=30 partitions=5604 train=4483 test=1121 feature_set=rows_cols input_dim=60 device=cpu parameters=141313
+target_log_mean=29.6712 target_log_std=4.1014
+Traceback (most recent call last):
+  File "/home/yangx/ML-RSK/shape_counts/train_shape_counts_mlp.py", line 306, in <module>
+    main()
+  File "/home/yangx/ML-RSK/shape_counts/train_shape_counts_mlp.py", line 247, in main
+    train_loss, train_scaled_mae, _ = run_epoch(model, train_loader, criterion, device, optimizer)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangx/ML-RSK/shape_counts/train_shape_counts_mlp.py", line 195, in run_epoch
+    pred = model(x)
+           ^^^^^^^^
+  File "/home/yangx/miniforge3/envs/sage/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangx/miniforge3/envs/sage/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangx/ML-RSK/shape_counts/train_shape_counts_mlp.py", line 115, in forward
+    return self.net(x)
+           ^^^^^^^^^^^
+  File "/home/yangx/miniforge3/envs/sage/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangx/miniforge3/envs/sage/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangx/miniforge3/envs/sage/lib/python3.12/site-packages/torch/nn/modules/container.py", line 253, in forward
+    input = module(input)
+            ^^^^^^^^^^^^^
+  File "/home/yangx/miniforge3/envs/sage/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangx/miniforge3/envs/sage/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yangx/miniforge3/envs/sage/lib/python3.12/site-packages/torch/nn/modules/linear.py", line 134, in forward
+    return F.linear(input, self.weight, self.bias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: mat1 and mat2 shapes cannot be multiplied (256x60 and 30x256)

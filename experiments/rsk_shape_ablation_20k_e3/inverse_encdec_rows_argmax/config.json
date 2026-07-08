@@ -1,0 +1,17 @@
+{
+  "name": "inverse_encdec_rows_argmax",
+  "perm_representation": "inverse",
+  "architecture": "encoder_decoder",
+  "output_mode": "rows",
+  "inference": "argmax",
+  "dataset": "data/rsk_shape/rsk_n30_m100000_seed2.npz",
+  "epochs": 3,
+  "batch_size": 512,
+  "d_model": 64,
+  "num_heads": 4,
+  "num_layers": 2,
+  "dim_feedforward": 256,
+  "max_samples": 20000,
+  "device": "cpu",
+  "model_out": "experiments/rsk_shape_ablation_20k_e3/inverse_encdec_rows_argmax/model.pt"
+}

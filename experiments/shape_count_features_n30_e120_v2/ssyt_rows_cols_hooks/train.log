@@ -1,0 +1,26 @@
+task=ssyt n=30 partitions=5604 train=4483 test=1121 feature_set=rows_cols_hooks input_dim=65 device=cpu parameters=150273
+target_log_mean=56.4393 target_log_std=5.6606
+epoch=0001 train_loss=2.089143 test_loss=0.797350 train_log_mae=5.7142 test_log_mae=3.1686
+epoch=0012 train_loss=0.056052 test_loss=0.040836 train_log_mae=1.1018 test_log_mae=1.0380
+epoch=0024 train_loss=0.014977 test_loss=0.002798 train_log_mae=0.5098 test_log_mae=0.1760
+epoch=0036 train_loss=0.011313 test_loss=0.004522 train_log_mae=0.4540 test_log_mae=0.2368
+epoch=0048 train_loss=0.005840 test_loss=0.001257 train_log_mae=0.3061 test_log_mae=0.1688
+epoch=0060 train_loss=0.006261 test_loss=0.004662 train_log_mae=0.3302 test_log_mae=0.3456
+epoch=0072 train_loss=0.012565 test_loss=0.006132 train_log_mae=0.4554 test_log_mae=0.3421
+epoch=0084 train_loss=0.004913 test_loss=0.001809 train_log_mae=0.2842 test_log_mae=0.2092
+epoch=0096 train_loss=0.004942 test_loss=0.002966 train_log_mae=0.2992 test_log_mae=0.2928
+epoch=0108 train_loss=0.003926 test_loss=0.003426 train_log_mae=0.2427 test_log_mae=0.3019
+epoch=0120 train_loss=0.003580 test_loss=0.005402 train_log_mae=0.2396 test_log_mae=0.4053
+final:
+test_log_mae=0.405298
+test_log_rmse=0.416039
+median_multiplicative_error=1.506231x
+mean_relative_error=0.506494
+
+examples:
+shape=[2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] true_log=12.1459 pred_log=10.9420 abs_log_err=1.2039
+shape=[4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2] true_log=41.4934 pred_log=42.2667 abs_log_err=0.7733
+shape=[14, 2, 2, 2, 2, 2, 2, 2, 2] true_log=52.8108 pred_log=53.5583 abs_log_err=0.7475
+shape=[14, 2, 2, 2, 2, 2, 2, 2, 1, 1] true_log=53.5996 pred_log=54.2502 abs_log_err=0.6506
+shape=[6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2] true_log=45.4529 pred_log=46.0955 abs_log_err=0.6426
+wrote experiments/shape_count_features_n30_e120_v2/ssyt_rows_cols_hooks/model.pt

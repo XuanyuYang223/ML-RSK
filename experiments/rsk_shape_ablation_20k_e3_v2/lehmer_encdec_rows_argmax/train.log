@@ -1,0 +1,5 @@
+dataset=data/rsk_shape/rsk_n30_m100000_seed2.npz n=30 train=16000 test=4000 representation=lehmer architecture=encoder_decoder output=rows inference=argmax device=cpu parameters=241311
+epoch=0001 train_loss=1.9634 test_loss=1.1950 train_row_acc=0.591 test_row_acc=0.720 test_exact_acc=0.000 test_row_mae=1.000 test_total_box_mae=30.000
+epoch=0002 train_loss=0.8786 test_loss=0.5643 train_row_acc=0.780 test_row_acc=0.848 test_exact_acc=0.003 test_row_mae=0.172 test_total_box_mae=0.471
+epoch=0003 train_loss=0.4919 test_loss=0.4222 train_row_acc=0.850 test_row_acc=0.853 test_exact_acc=0.004 test_row_mae=0.164 test_total_box_mae=0.591
+wrote experiments/rsk_shape_ablation_20k_e3_v2/lehmer_encdec_rows_argmax/model.pt

@@ -1,0 +1,15 @@
+{
+  "dataset": "data/rsk_shape/rsk_n30_m100000_seed2.npz",
+  "eval_dataset": "data/rsk_shape/rsk_n30_m2000_seed1_test.npz",
+  "max_samples": 10000,
+  "epochs": 5,
+  "batch_size": 512,
+  "d_model": 32,
+  "num_heads": 4,
+  "num_layers": 1,
+  "dim_feedforward": 128,
+  "perm_representation": "lehmer",
+  "constrained": false,
+  "device": "cpu",
+  "model_out": "experiments/rsk_shape_autoregressive_10k_e5/lehmer_unconstrained/model.pt"
+}

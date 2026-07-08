@@ -1,0 +1,17 @@
+{
+  "name": "one_line_encdec_deltas_argmax",
+  "perm_representation": "one_line",
+  "architecture": "encoder_decoder",
+  "output_mode": "deltas",
+  "inference": "argmax",
+  "dataset": "data/rsk_shape/rsk_n30_m10000_seed0.npz",
+  "epochs": 3,
+  "batch_size": 256,
+  "d_model": 64,
+  "num_heads": 4,
+  "num_layers": 2,
+  "dim_feedforward": 256,
+  "max_samples": 1000,
+  "device": "auto",
+  "model_out": "experiments/rsk_shape_ablation/one_line_encdec_deltas_argmax/model.pt"
+}

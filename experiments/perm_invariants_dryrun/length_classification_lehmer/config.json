@@ -1,0 +1,16 @@
+{
+  "name": "length_classification_lehmer",
+  "task": "length",
+  "target_mode": "classification",
+  "repr": "lehmer",
+  "dataset": "data/rsk_shape/rsk_n30_m100000_seed2.npz",
+  "epochs": 1,
+  "batch_size": 512,
+  "d_model": 64,
+  "num_heads": 4,
+  "num_layers": 2,
+  "dim_feedforward": 256,
+  "max_samples": 20000,
+  "device": "cpu",
+  "model_out": "experiments/perm_invariants_dryrun/length_classification_lehmer/model.pt"
+}

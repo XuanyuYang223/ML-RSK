@@ -1,0 +1,15 @@
+{
+  "dataset": "data/rsk_shape/rsk_n30_m100000_seed2.npz",
+  "eval_dataset": "data/rsk_shape/rsk_n30_m2000_seed1_test.npz",
+  "n": 30,
+  "classes": 5604,
+  "epochs": 20,
+  "batch_size": 1024,
+  "d_model": 128,
+  "num_heads": 4,
+  "num_layers": 2,
+  "dim_feedforward": 512,
+  "perm_representation": "lehmer",
+  "device": "cuda",
+  "model_out": "experiments/rsk_shape_partition_classifier_100k_e20/lehmer/model.pt"
+}
